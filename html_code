@@ -1,0 +1,294 @@
+<!DOCTYPE>
+
+<html>
+<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+		  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+		  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<style>
+		body{
+		background-color:lightblue;
+		}
+		.row{
+		padding-top:20px;
+		padding-bottom:20px;
+		}
+		@media (min-width: 1200px)
+		.ll{
+			width:100%;
+		}
+		.kk{
+		color:red;
+		}
+	</style>
+</head>
+<body>
+	<script>
+				$(document).ready(function(){
+					$("#cn").click(function(){
+					var a= $("#cn").val();
+					if(a=="INDIA"){
+						$("#has").hide();
+					$("#india").show();
+					$("#china").hide();
+					}
+					else if(a=="CHINA"){
+						$("#has").hide();
+					$("#india").hide();
+					$("#china").show();
+					}
+					});
+				});
+		</script>
+    <!- Form Validation-->
+	<?php 
+				$nm=$em=$gnd1=$cn=$pn=$ps=$cps=$err_nm=$err_em=$err_gnd=$err_cn=$err_pn=$err_cps=$err_ps=$state=$err_st=$cnt="";
+				$india= array("Andhra Pradesh","Punjab","Rajasthan");
+				$country = array("USA" , "CHINA" , "INDIA");
+				/*$array1=array("INDIA" => array("ap" , "RJ" , "MP"),
+							 "CHINA" => array("kk" , "kk" , "kk"));
+
+				*/
+
+				if(isset($_POST['cn'])){
+					$cnt=$_POST['cn'];
+					$stat=array();
+					if($cnt=="INDIA"){
+						$stat=$india;
+					}
+				}
+
+
+				if(isset($_POST['sub']))
+				{
+					$nm=$_POST['nm'];
+					$em=$_POST['em'];
+					$pn=$_POST['pn'];
+					$cn=$_POST['cn'];
+					$state=$_POST['state'];
+						
+						if(isset($_POST['gnd']))
+						{
+							$gnd1=$_POST['gnd'];
+						}
+
+							$ps=$_POST['ps'];
+							$cps=$_POST['cps'];
+
+						if(empty($nm))
+						{
+						 $err_nm="Please Enter Your Name";
+						}
+						else if (!preg_match("/^[a-zA-Z ]*$/",$nm))
+							{
+								$err_nm = "Only letters and white space allowed"; 
+							}
+						else
+						{
+						$err_nm="Your Name - ".$nm;
+						}
+						
+						if(empty($em))
+						{
+							$err_em="Please Enter Your Email";
+						}
+						else if(!preg_match("^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$^",$em)){
+							$err_em="Invalid Email !";
+						}
+						else{
+							$err_em="Your Email - ".$em;
+						}
+						if(empty($pn)){
+						 $err_pn="Please Enter Your Phone Number";
+						}
+						else if(!preg_match('/^[0-9]{10}$/', $pn)){
+						$err_pn="Enter a valid Phone no.";
+						}
+						else{
+							$err_pn="Your Phone Number - ".$pn;
+						}
+						if($gnd1=="Male")
+						{
+						 $err_gnd="You are a - ".$gnd1;
+						}
+						else if($gnd1=="Female")
+						{
+						$err_gnd="You are a - ".$gnd1;
+						}
+						else{
+							$gnd1="";
+						$err_gnd="Please select Gender";
+						}
+
+						if(empty($ps)){
+						 $err_ps="Please Enter Password";
+						}
+						else if (!preg_match("/^(?=.*\d)(?=.*[@#\-_$%^&+=ยง!\?])(?=.*[a-z])(?=.*[A-Z])[0-9A-Za-z@#\-_$%^&+=ยง!\?]{8,20}$/",$ps)) {
+							  $err_ps = "Must contain at least one(lowercase char ,uppercase char ,digitspecial sign of @#-_$%^&+=ยง!?)"; 
+							}
+						else{
+							 $err_ps="Your Password is - ".$ps;
+						}
+						if(empty($cps)){
+						 $err_cps="Please Enter Password";
+						}
+						else if (($ps==$cps)) {
+							 $err_cps="Your Password is - ".$cps;
+							  
+							}
+						else{
+							 $err_cps = "Password Didn't Match";
+						}
+
+						if(empty($cn)){
+						 $err_cn="Please select Country";
+						}
+						else{
+							 $err_cn="Your Country - ".$cn;
+						}
+						if(empty($state)){
+						 $err_st="Please select state";
+						}
+						else{
+							 $err_st="Your State - ".$state;
+						}
+
+				}
+?>
+<div align="center">
+	<fieldset class="ll" style="border:1px solid red;width:50%;">
+		<legend style="background-color: #efefef;border:1px solid black;border-radius: 10px;padding: 10px 20px;text-align: center;margin:20px;width:55%">Contact Form</legend>
+			<form method="post" align="left">
+				<div>
+					<div class="row" style="padding-left:10px;">
+						<div class="col-lg-4" style="text-align:left;">
+							<label>Name:</label>
+						</div>
+						<div class="col-lg-4"  style="text-align:left;">
+							<input type="text" name="nm" value="" style="width:95%;" >
+						</div>
+						<div class="col-lg-4">
+							<span class="kk">*<?php echo $err_nm; ?></span>
+						</div>
+					</div>
+				</div>
+				
+				<div class="row" style="padding-left:10px;">
+					<div class="col-lg-4"  style="text-align:left;">
+						<label>Email:</label>
+					</div>
+					<div class="col-lg-4"  style="text-align:left;">
+						<input type="text" name="em" value="" style="width:95%;">
+					</div>
+					<div class="col-lg-4" style="text-align:left;">
+						<span class="kk">*<?php echo $err_em; ?></span>
+					</div>
+				</div>
+				<div class="row" style="padding-left:10px;">
+					<div class="col-lg-4"  style="text-align:left;">
+						<label>Phone:</label>
+					</div>
+					<div class="col-lg-4"  style="text-align:left;">
+						<input type="phone" name="pn" value="" style="width:95%;">
+					</div>
+					<div class="col-lg-4"  style="text-align:left;">
+						<span class="kk">*<?php echo $err_pn; ?></span>
+					</div>
+				</div>
+	
+				<div class="row" style="padding-left:10px;">
+					<div class="col-lg-4" style="text-align:left;">
+						<label>Password:</label>
+					</div>
+					<div class="col-lg-4"  style="text-align:left;">
+						<input type="password" name="ps" value="" style="width:95%;" >
+					</div>
+					<div class="col-lg-4">
+						<span class="kk">*<?php echo $err_ps; ?></span>
+					</div>
+				</div>
+				
+				<div class="row" style="padding-left:10px;">
+					<div class="col-lg-4" style="text-align:left;">
+						<label> Confirm Password:</label>
+					</div>
+					<div class="col-lg-4"  style="text-align:left;">
+						<input type="password" name="cps" value="" style="width:95%;" >
+					</div>
+					<div class="col-lg-4">
+						<span class="kk">*<?php echo $err_cps; ?></span>
+					</div>
+				</div>
+	
+				<div class="row" style="padding-left:10px;">
+					<div class="col-lg-4"  style="text-align:left;">
+						<label>Select Gender:</label>
+					</div>
+					<div class="col-lg-4"  style="text-align:left;">
+						<input type="radio" name="gnd" value="Male">Male
+						<input type="radio" name="gnd" value="Female">Female
+					</div>
+					<div class="col-lg-4"  style="text-align:left;">
+						<span class="kk">*<?php echo $err_gnd; ?></span>
+					</div>
+				</div>
+				
+				<div class="row" style="padding-left:10px;">
+					<div class="col-lg-4"  style="text-align:left;">
+						<label>Select Country:</label>
+					</div>
+					<div class="col-lg-4"  style="text-align:left;">
+						<select name="cn" id="cn">
+							<option>----Select-----</option>;
+									<?php	
+										$countries=count($country);
+									for($x=0;$x<$countries;$x++){
+										
+										echo '<option value="'.$country["$x"].'"> '.$country["$x"].'</option>';
+									}
+									?>  
+						</select>
+					</div>
+					<div class="col-lg-4"  style="text-align:left;">
+						<span class="kk">*<?php echo $cnt; ?></span>
+					</div>
+				</div>
+				
+				<div class="row" style="padding-left:10px;">
+					<div class="col-lg-4"  style="text-align:left;">
+						<label>Select State:</label>
+					</div>
+					<div class="col-lg-4"  style="text-align:left;">
+						<select id="india" name="state">
+							<option>---Select State----</option>
+								<?php  
+								$states=count($stat);
+								for($x=0;$x<$states;$x++){
+									echo '<option value="'.$stat["$x"].'"> '.$stat["$x"].'</option>';
+								}
+								?>                    
+						</select>
+						<select id="china" name="" style="display:none;">		
+							<option  name="" value="" >Select State</option>
+							<option   name="" value="FUJIAN" >FUJIAN</option>
+							<option   name="" value="SICHUAN">SICHUAN</option>
+							<option   name="" value="HUAN">HUAN</option>
+							<option   name="" value="HENAN">HENAN</option>
+						</select>
+					</div>
+					<div class="col-lg-4"  style="text-align:left;">
+						<span class="kk">*<?php echo $err_st; ?></span>
+					</div>
+				</div>
+
+				<div style="text-align:center;">
+					<input type="submit" name="sub" value="Submit">
+				</div>
+				
+			</form>
+	</fieldset>
+	</div>
+</body>
+</html>
